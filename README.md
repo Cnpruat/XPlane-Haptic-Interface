@@ -30,8 +30,8 @@ A Python application using:
 
 #### 📸 Vest Feedback Zones
 
-![VestFront Diagram](images/vestfront_diagram.png)  
-![VestBack Diagram](images/vestback_diagram.png) 
+<img src="images/vestfront_diagram.png" alt="Vest diagram" width="400"/>
+<img src="images/vestback_diagram.png" alt="Vest diagram" width="400"/>
 *Example of vibration zones activated on the TactSuit X40.*
 
 ---
