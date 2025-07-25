@@ -1,22 +1,27 @@
-import pygame_widgets
-import pygame
-from pygame_widgets.slider import Slider
-from pygame_widgets.textbox import TextBox
-from pygame_widgets.button import Button
+# ---------- Standard library imports ----------
 import keyboard
-
+import os
+import contextlib
 import sys
-import xpc
-
-import multiprocessing as mp
 import time
+import multiprocessing as mp
 
-import tactcombine
-from bhaptics import haptic_player
+# ---------- Local library imports ----------
+import xpc                                                  # XPlane connect library
+import tactcombine                                          # CPP library to combine .tact files
+from bhaptics import haptic_player                          # Bhaptic library
 from bhaptics.haptic_player import BhapticsPosition
 
+# ---------- Third-party library imports ----------
+with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initial print
+    import pygame_widgets
+    import pygame
+    from pygame_widgets.slider import Slider
+    from pygame_widgets.textbox import TextBox
+    from pygame_widgets.button import Button
 
-### Processes definition
+
+# ---------- Processes definition ----------
 def gather_data(shared_vars):
     while shared_vars['running'].value:
         try:
@@ -261,7 +266,7 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./python_interface/patterns/patterns1/"+str_roll+".tact","./python_interface/patterns/patterns1/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/logic1/"+str_roll+".tact","./python_interface/patterns/logic1/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
                 path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
@@ -274,7 +279,7 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./python_interface/patterns/patterns2/"+str_roll+".tact","./python_interface/patterns/patterns2/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/logic2/"+str_roll+".tact","./python_interface/patterns/logic2/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
                 path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
@@ -287,7 +292,7 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./python_interface/patterns/patterns2/"+str_roll+".tact","./python_interface/patterns/patterns2/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/logic3/"+str_roll+".tact","./python_interface/patterns/logic3/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
                 path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
@@ -297,7 +302,7 @@ def make_vibrate(shared_vars): #
 
 
 
-### Main process
+# ---------- Main process ----------
 
 if __name__ == '__main__':
 
