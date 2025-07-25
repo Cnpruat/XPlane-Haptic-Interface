@@ -26,7 +26,7 @@ A Python application using:
 #### 📸 GUI Example
 
 <p align="center">
-   <img src="images/GUI_py.png" alt="Python GUI" width="1000"/>
+   <img src="images/GUI_py.png" alt="Python GUI" width="850"/>
 </p>
 *Real-time data from X-Plane with attitude visualisation.*
 
@@ -53,7 +53,7 @@ A native plugin for X-Plane (written in C++) using the XPLM SDK:
 
 #### 📸 Plugin Window
 <p align="center">
-   <img src="Control_panel_XP.png" alt="XPlane control panel" width="400"/>
+   <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="400"/>
 </p>
 *Custom window inside X-Plane with interactive controls.*
 
