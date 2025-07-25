@@ -26,7 +26,7 @@ A Python application using:
 #### 📸 GUI Example
 
 <p align="center">
-   <img src="images/GUI_py.png" alt="Python GUI" width="400"/>
+   <img src="images/GUI_py.png" alt="Python GUI" width="1000"/>
 </p>
 *Real-time data from X-Plane with attitude visualisation.*
 
