@@ -39,7 +39,7 @@ def gather_data(shared_vars):
                 shared_vars['GEAR'].value = Lgear[0]
 
                 #print(shared_vars['roll'].value, shared_vars['pitch'].value, shared_vars['yaw'].value, shared_vars['agl'].value, flush=True)
-                
+
         except (TimeoutError, ConnectionResetError):
             print("Not connected")
 
@@ -48,18 +48,18 @@ def roll_processing(shared_vars, vibration_levels):
     while shared_vars['running'].value:
         roll = shared_vars['roll'].value
         user_intensity = shared_vars['user_intensity'].value
-        
+
         intensite_roll = 0
         str_roll = "RIEN"
-        
+
         if roll > 2:
             str_r = "Right_"
-            
+
             roll_use = abs(roll)
             if (roll_use > 2) and (roll_use < 24):
                 intensite_roll = ((roll_use-2)*(100/21))/100*user_intensity
-                str_roll = str_r + "1"         
-        
+                str_roll = str_r + "1"
+
                 for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
                     vibration_levels[i] = 0
                 for i in [12,35]:
@@ -83,7 +83,7 @@ def roll_processing(shared_vars, vibration_levels):
 
             elif (roll_use >= 68) and (roll_use < 90):
                 intensite_roll = ((roll_use-68)*(100/21))/100*user_intensity
-                str_roll = str_r + "4"           
+                str_roll = str_r + "4"
                 for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
                     vibration_levels[i] = 0
                 for i in [0,23]:
@@ -96,15 +96,15 @@ def roll_processing(shared_vars, vibration_levels):
                     vibration_levels[i] = 100
 
 
-            
+
         elif roll < 2:
             str_r = "Left_"
 
             roll_use = abs(roll)
             if (roll_use > 2) and (roll_use < 24):
                 intensite_roll = ((roll_use-2)*(100/21))/100*user_intensity
-                str_roll = str_r + "1"         
-        
+                str_roll = str_r + "1"
+
                 for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
                     vibration_levels[i] = 0
                 for i in [15,32]:
@@ -128,7 +128,7 @@ def roll_processing(shared_vars, vibration_levels):
 
             elif (roll_use >= 68) and (roll_use < 90):
                 intensite_roll = ((roll_use-68)*(100/21))/100*user_intensity
-                str_roll = str_r + "4"           
+                str_roll = str_r + "4"
                 for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
                     vibration_levels[i] = 0
                 for i in [3,20]:
@@ -140,11 +140,11 @@ def roll_processing(shared_vars, vibration_levels):
                 for i in [3,7,11,15,19,20,24,28,32,36]:
                     vibration_levels[i] = 100
 
-            
+
         else:
             str_r = ""
 
-        
+
         shared_vars['intensite_roll'].value = intensite_roll
         shared_vars['str_roll'].value = str_roll
 
@@ -155,13 +155,13 @@ def pitch_processing(shared_vars, vibration_levels):
     while shared_vars['running'].value:
         pitch = shared_vars['pitch'].value
         user_intensity = shared_vars['user_intensity'].value
-        
+
         intensite_pitch = 0
         str_pitch = "RIEN"
-        
+
         if pitch > 2:
             str_p = "Back_"
-            
+
             pitch_use = abs(pitch)
             if (pitch_use > 2) and (pitch_use < 14):
                 intensite_pitch = ((pitch_use-2)*(100/11))/100*user_intensity
@@ -173,7 +173,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 14) and (pitch_use < 26):
                 intensite_pitch = ((pitch_use-14)*(100/11))/100*user_intensity
-                str_pitch = str_p + "2"            
+                str_pitch = str_p + "2"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [29,30]:
@@ -181,7 +181,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 26) and (pitch_use < 38):
                 intensite_pitch = ((pitch_use-26)*(100/11))/100*user_intensity
-                str_pitch = str_p + "3"            
+                str_pitch = str_p + "3"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [25,26]:
@@ -189,7 +189,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 38) and (pitch_use < 50):
                 intensite_pitch = ((pitch_use-38)*(100/11))/100*user_intensity
-                str_pitch = str_p + "4"           
+                str_pitch = str_p + "4"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [21,22]:
@@ -197,11 +197,11 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 50):
                 intensite_pitch = 1*user_intensity
-                str_pitch = str_p + "MAX"            
+                str_pitch = str_p + "MAX"
                 for i in [21,22,25,26,29,30,33,34]:
                     vibration_levels[i] = 100
 
-            
+
         elif pitch < 2:
             str_p = "Front_"
 
@@ -216,7 +216,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 14) and (pitch_use < 26):
                 intensite_pitch = ((pitch_use-14)*(100/11))/100*user_intensity
-                str_pitch = str_p + "2"            
+                str_pitch = str_p + "2"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [9,10]:
@@ -224,7 +224,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 26) and (pitch_use < 38):
                 intensite_pitch = ((pitch_use-26)*(100/11))/100*user_intensity
-                str_pitch = str_p + "3"            
+                str_pitch = str_p + "3"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [5,6]:
@@ -232,7 +232,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 38) and (pitch_use < 50):
                 intensite_pitch = ((pitch_use-38)*(100/11))/100*user_intensity
-                str_pitch = str_p + "4"           
+                str_pitch = str_p + "4"
                 for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
                     vibration_levels[i] = 0
                 for i in [1,2]:
@@ -240,18 +240,18 @@ def pitch_processing(shared_vars, vibration_levels):
 
             elif (pitch_use >= 50):
                 intensite_pitch = 1*user_intensity
-                str_pitch = str_p + "4"            
+                str_pitch = str_p + "4"
                 for i in [1,2,5,6,9,10,13,14]:
                     vibration_levels[i] = 100
-            
+
         else:
             str_p = ""
-            
+
         shared_vars['intensite_pitch'].value = intensite_pitch
         shared_vars['str_pitch'].value = str_pitch
         time.sleep(0.01)
 
-def make_vibrate(shared_vars): # 
+def make_vibrate(shared_vars): #
     player = haptic_player.HapticPlayer()
     while shared_vars['running'].value:
         if not(shared_vars['GEAR'].value):
@@ -261,9 +261,9 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./patterns/patterns1/"+str_roll+".tact","./patterns/patterns1/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/patterns1/"+str_roll+".tact","./python_interface/patterns/patterns1/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2)
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(0.1)
@@ -274,9 +274,9 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./patterns/patterns2/"+str_roll+".tact","./patterns/patterns2/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/patterns2/"+str_roll+".tact","./python_interface/patterns/patterns2/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2)
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(1)
@@ -287,14 +287,14 @@ def make_vibrate(shared_vars): #
                 intensite_roll = shared_vars['intensite_roll'].value
                 intensite_pitch = shared_vars['intensite_pitch'].value
 
-                L1 = ["./patterns/patterns2/"+str_roll+".tact","./patterns/patterns2/"+str_pitch+".tact"]
+                L1 = ["./python_interface/patterns/patterns2/"+str_roll+".tact","./python_interface/patterns/patterns2/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2)
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(1)
-                
-            
+
+
 
 
 ### Main process
@@ -314,7 +314,7 @@ if __name__ == '__main__':
     shared_vars['speed'] = manager.Value('d', 0.0)
     shared_vars['TAS'] = manager.Value('d', 0.0)
 
-    #shared_vars['logic'] = manager.Value('i', 1)    
+    #shared_vars['logic'] = manager.Value('i', 1)
 
     shared_vars['running'] = manager.Value('b', True)
     shared_vars['GEAR'] = manager.Value('b', True)
@@ -324,7 +324,7 @@ if __name__ == '__main__':
 
     shared_vars['str_roll'] = manager.Value('u', '')
     shared_vars['str_pitch'] = manager.Value('u', '')
-    
+
     shared_vars['user_intensity'] = manager.Value('d', 1.0)
 
     shared_vars['mode'] = manager.Value('i', 1)
@@ -365,14 +365,14 @@ if __name__ == '__main__':
         radius=20,
         onClick=stop_program)
 
-    background = pygame.image.load("./Dependencies/pictures/horizon.png").convert_alpha()
+    background = pygame.image.load("./python_interface/assets/horizon.png").convert_alpha()
     background = pygame.transform.scale(background, (700, 700))
-    plane = pygame.image.load("./Dependencies/pictures/avion.png").convert_alpha()
+    plane = pygame.image.load("./python_interface/assets/avion.png").convert_alpha()
     plane = pygame.transform.scale(plane, (300, 300))
 
-    VFront = pygame.image.load("./Dependencies/pictures/Front.png").convert_alpha()
+    VFront = pygame.image.load("./python_interface/assets/Front.png").convert_alpha()
     VFront = pygame.transform.scale(VFront, (350, 350))
-    BFront = pygame.image.load("./Dependencies/pictures/Back.png").convert_alpha()
+    BFront = pygame.image.load("./python_interface/assets/Back.png").convert_alpha()
     BFront = pygame.transform.scale(BFront, (350, 350))
 
     Surf = (400, 400)
@@ -385,7 +385,7 @@ if __name__ == '__main__':
 
     def draw_motor(surface, x, y, intensity):
         intensity = max(0, min(100, intensity))
-        alpha = int((intensity / 100) * 255)  
+        alpha = int((intensity / 100) * 255)
 
         circle_surf = pygame.Surface((32, 32), pygame.SRCALPHA)
         pygame.draw.circle(circle_surf, (255, 255, 0, alpha), (16, 16), 16)
@@ -437,12 +437,12 @@ if __name__ == '__main__':
 
 
     # GUI loop
-    
+
     while shared_vars['running'].value:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 shared_vars['running'].value = False  # Arrêt des process
-                
+
         screen.fill((25, 25, 25))
         pygame.draw.line(screen, (230, 230, 230), (550, 50), (550, 670), 3)
         horizon_surface.fill((0, 0, 0, 0))
@@ -450,11 +450,11 @@ if __name__ == '__main__':
         roll = shared_vars['roll'].value
         pitch = shared_vars['pitch'].value
         yaw = shared_vars['yaw'].value
-        
+
         intensite_roll = shared_vars['intensite_roll'].value
         agl = shared_vars['agl'].value
         speed = shared_vars['speed'].value
-        TAS = shared_vars['TAS'].value         
+        TAS = shared_vars['TAS'].value
 
         rotated = pygame.transform.rotate(background, roll)
         pitch_offset = pitch * 4.2
@@ -474,17 +474,17 @@ if __name__ == '__main__':
         screen.blit(txt, (75, 580))
         txt = font_info.render(f"Yaw :   {yaw:.1f} °", True, (230, 230, 230))
         screen.blit(txt, (75, 620))
-        
+
         txt = font_info.render(f"Intensity : {slider.getValue():.0f} %", True, (255, 220, 0))
         screen.blit(txt, (895, 547))
-        
+
         txt = font_info.render(f"Gspeed : {speed : .1f} m/s", True, (230, 230, 230))
         screen.blit(txt, (245, 540))
         txt = font_info.render(f"TAS : {TAS : .1f} m/s", True, (230, 230, 230))
         screen.blit(txt, (245, 580))
         txt = font_info.render(f"AGL : {agl : .1f} m", True, (230, 230, 230))
         screen.blit(txt, (245, 620))
-        
+
         shared_vars['user_intensity'].value = slider.getValue() / 100
         txt = font_info.render(f"Logic Mode: {selected_logic['value']}", True, 	(255, 220, 0))
         screen.blit(txt, (955, 475))
@@ -493,7 +493,7 @@ if __name__ == '__main__':
         # Display pictures of the vest
         screen.blit(VFront, (585, 90))
         screen.blit(BFront, (798, 85))
-        
+
         # Display the front motors and label
         txt = font_info.render("Front :", True, (230, 230, 230))
         screen.blit(txt, (722, 70))
@@ -505,8 +505,8 @@ if __name__ == '__main__':
         screen.blit(txt, (938, 70))
         for i, (x, y) in back_positions.items():
             draw_motor(screen, x, y, vibration_levels[i])
-            
-                    
+
+
         pygame_widgets.update(event)
         pygame.display.flip()
         clock.tick(60)

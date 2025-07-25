@@ -25,7 +25,9 @@ A Python application using:
 
 #### 📸 GUI Example
 
-![Pitch and Roll Feedback](images/gui_pitch_roll.png)  
+<p align="center">
+   <img src="images/GUI_py.png" alt="Python GUI" width="400"/>
+</p>
 *Real-time data from X-Plane with attitude visualisation.*
 
 #### 📸 Vest Feedback Zones
@@ -34,7 +36,7 @@ A Python application using:
    <img src="images/vestfront_diagram.png" alt="Vest diagram" width="400"/>
    <img src="images/vestback_diagram.png" alt="Vest diagram" width="400"/>
 </p>
-*Example of vibration zones activated on the TactSuit X40.*
+*bHaptics TactSuit x40 tactors index. Front on the left, back on the right*
 
 ---
 
@@ -50,8 +52,9 @@ A native plugin for X-Plane (written in C++) using the XPLM SDK:
 - Fully compatible with X-Plane 11 and 12
 
 #### 📸 Plugin Window
-
-![X-Plane Plugin Window](images/xp_plugin_window.png)  
+<p align="center">
+   <img src="Control_panel_XP.png" alt="XPlane control panel" width="400"/>
+</p>
 *Custom window inside X-Plane with interactive controls.*
 
 ---
@@ -95,13 +98,13 @@ XPlane-Haptic-Interface/
 
 ## 👨‍🔬 Author
 
-**Pierre Bourrandy**  
-Engineering student in Mechatronics – ENSIL-ENSCI  
+**Pierre Bourrandy**
+Engineering student in Mechatronics – ENSIL-ENSCI
 2025 Internship Project – Australia 🇦🇺
 
 ---
 
 ## 📜 License
 
-This project is intended for academic and personal demonstration purposes.  
+This project is intended for academic and personal demonstration purposes.
 For commercial or extended use, please contact the author.
