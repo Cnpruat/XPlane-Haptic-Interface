@@ -8,6 +8,7 @@ build/
 dist/
 
 # VSCode / IDE
+.vs/
 .vscode/
 .idea/
 *.suo
