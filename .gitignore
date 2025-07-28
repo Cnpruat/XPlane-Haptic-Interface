@@ -19,8 +19,6 @@ dist/
 *.obj
 *.exp
 *.lib
-*.pdb
-*.xpl
 *.dll
 
 # Dossiers de build
