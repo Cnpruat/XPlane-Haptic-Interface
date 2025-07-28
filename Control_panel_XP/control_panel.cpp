@@ -263,7 +263,7 @@ void CreateMainWindow(int x, int y, int width, int height) {
 void MenuHandler(void*, void* ref) {
     if (strcmp((char*)ref, "Open") == 0) {
         if (menuItemFlag == 0) {
-            CreateMainWindow(300, 700, 320, 625);
+            CreateMainWindow(10, 1000, 320, 625);
             menuItemFlag = 1;
         }
         else if (!XPIsWidgetVisible(mainWidget)) {
@@ -273,8 +273,8 @@ void MenuHandler(void*, void* ref) {
 }
 
 PLUGIN_API int XPluginStart(char* outName, char* outSig, char* outDesc) {
-    strcpy(outName, "SimpleControlPanel");
-    strcpy(outSig, "example.simple.control");
+    strcpy(outName, "ControlPanel");
+    strcpy(outSig, "IISRI.pBourrandy.controlpanel");
     strcpy(outDesc, "Control panel to trigger failures and weather.");
 
     int item = XPLMAppendMenuItem(XPLMFindPluginsMenu(), "Control Panel", NULL, 0);
@@ -319,6 +319,8 @@ PLUGIN_API int XPluginStart(char* outName, char* outSig, char* outDesc) {
     drWindSpeed1 = XPLMFindDataRef("sim/weather/wind_speed_kt[1]");
     drWindSpeed2 = XPLMFindDataRef("sim/weather/region/wind_speed_msc");
 
+    CreateMainWindow(10, 1000, 320, 625);
+    menuItemFlag = 1;
     return 1;
 }
 
