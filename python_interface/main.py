@@ -5,6 +5,7 @@ import contextlib
 import sys
 import time
 import multiprocessing as mp
+import threading
 
 # ---------- Local library imports ----------
 import xpc                                                  # XPlane connect library
@@ -23,7 +24,7 @@ with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initi
 
 # ---------- Processes definition ----------
 def gather_data(shared_vars):
-    while shared_vars['running'].value:
+    while shared_vars['running']:
         try:
             with xpc.XPlaneConnect() as client:
                 Lroll, Lpitch, Lyaw, Lagl, Lspeed, LTAS, Lgear = client.getDREFs([
@@ -35,30 +36,30 @@ def gather_data(shared_vars):
                     "sim/flightmodel/position/true_airspeed",
                     "sim/cockpit/switches/gear_handle_status"])
 
-                shared_vars['roll'].value = Lroll[0]
-                shared_vars['pitch'].value = Lpitch[0]
-                shared_vars['yaw'].value = Lyaw[0]
-                shared_vars['agl'].value = Lagl[0]
-                shared_vars['speed'].value = Lspeed[0]
-                shared_vars['TAS'].value = LTAS[0]
-                shared_vars['GEAR'].value = Lgear[0]
+                shared_vars['roll'] = Lroll[0]
+                shared_vars['pitch'] = Lpitch[0]
+                shared_vars['yaw'] = Lyaw[0]
+                shared_vars['agl'] = Lagl[0]
+                shared_vars['speed'] = Lspeed[0]
+                shared_vars['TAS'] = LTAS[0]
+                shared_vars['GEAR'] = Lgear[0]
 
-                #print(shared_vars['roll'].value, shared_vars['pitch'].value, shared_vars['yaw'].value, shared_vars['agl'].value, flush=True)
+                #print(shared_vars['roll'], shared_vars['pitch'], shared_vars['yaw'], shared_vars['agl'])
 
         except (TimeoutError, ConnectionResetError):
             print("Not connected")
 
 
 def roll_processing(shared_vars, vibration_levels):
-    while shared_vars['running'].value:
-        roll = shared_vars['roll'].value
-        user_intensity = shared_vars['user_intensity'].value
+    while shared_vars['running']:
+        roll = shared_vars['roll']
+        user_intensity = shared_vars['user_intensity']
 
         intensite_roll = 0
-        str_roll = "RIEN"
+        str_roll = "NOTHING"
 
         if roll > 2:
-            str_r = "Right_"
+            str_r = "RIGHT_"
 
             roll_use = abs(roll)
             if (roll_use > 2) and (roll_use < 24):
@@ -103,7 +104,7 @@ def roll_processing(shared_vars, vibration_levels):
 
 
         elif roll < 2:
-            str_r = "Left_"
+            str_r = "LEFT_"
 
             roll_use = abs(roll)
             if (roll_use > 2) and (roll_use < 24):
@@ -150,22 +151,22 @@ def roll_processing(shared_vars, vibration_levels):
             str_r = ""
 
 
-        shared_vars['intensite_roll'].value = intensite_roll
-        shared_vars['str_roll'].value = str_roll
+        shared_vars['intensite_roll'] = intensite_roll
+        shared_vars['str_roll'] = str_roll
 
         time.sleep(0.01)  # évite CPU à 100%
 
 
 def pitch_processing(shared_vars, vibration_levels):
-    while shared_vars['running'].value:
-        pitch = shared_vars['pitch'].value
-        user_intensity = shared_vars['user_intensity'].value
+    while shared_vars['running']:
+        pitch = shared_vars['pitch']
+        user_intensity = shared_vars['user_intensity']
 
         intensite_pitch = 0
-        str_pitch = "RIEN"
+        str_pitch = "NOTHING"
 
         if pitch > 2:
-            str_p = "Back_"
+            str_p = "UP_"
 
             pitch_use = abs(pitch)
             if (pitch_use > 2) and (pitch_use < 14):
@@ -208,7 +209,7 @@ def pitch_processing(shared_vars, vibration_levels):
 
 
         elif pitch < 2:
-            str_p = "Front_"
+            str_p = "DOWN_"
 
             pitch_use = abs(pitch)
             if (pitch_use > 2) and (pitch_use < 14):
@@ -252,52 +253,52 @@ def pitch_processing(shared_vars, vibration_levels):
         else:
             str_p = ""
 
-        shared_vars['intensite_pitch'].value = intensite_pitch
-        shared_vars['str_pitch'].value = str_pitch
+        shared_vars['intensite_pitch'] = intensite_pitch
+        shared_vars['str_pitch'] = str_pitch
         time.sleep(0.01)
 
 def make_vibrate(shared_vars): #
     player = haptic_player.HapticPlayer()
-    while shared_vars['running'].value:
-        if not(shared_vars['GEAR'].value):
-            if shared_vars['mode'].value == 1:
-                str_roll = shared_vars['str_roll'].value
-                str_pitch = shared_vars['str_pitch'].value
-                intensite_roll = shared_vars['intensite_roll'].value
-                intensite_pitch = shared_vars['intensite_pitch'].value
+    while shared_vars['running']:
+        if not(shared_vars['GEAR']):
+            if shared_vars['mode'] == 1:
+                str_roll = shared_vars['str_roll']
+                str_pitch = shared_vars['str_pitch']
+                intensite_roll = shared_vars['intensite_roll']
+                intensite_pitch = shared_vars['intensite_pitch']
 
                 L1 = ["./python_interface/patterns/logic1/"+str_roll+".tact","./python_interface/patterns/logic1/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(0.1)
 
-            elif shared_vars['mode'].value == 2:
-                str_roll = shared_vars['str_roll'].value
-                str_pitch = shared_vars['str_pitch'].value
-                intensite_roll = shared_vars['intensite_roll'].value
-                intensite_pitch = shared_vars['intensite_pitch'].value
+            elif shared_vars['mode'] == 2:
+                str_roll = shared_vars['str_roll']
+                str_pitch = shared_vars['str_pitch']
+                intensite_roll = shared_vars['intensite_roll']
+                intensite_pitch = shared_vars['intensite_pitch']
 
                 L1 = ["./python_interface/patterns/logic2/"+str_roll+".tact","./python_interface/patterns/logic2/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(1)
 
-            elif shared_vars['mode'].value == 3:
-                str_roll = shared_vars['str_roll'].value
-                str_pitch = shared_vars['str_pitch'].value
-                intensite_roll = shared_vars['intensite_roll'].value
-                intensite_pitch = shared_vars['intensite_pitch'].value
+            elif shared_vars['mode'] == 3:
+                str_roll = shared_vars['str_roll']
+                str_pitch = shared_vars['str_pitch']
+                intensite_roll = shared_vars['intensite_roll']
+                intensite_pitch = shared_vars['intensite_pitch']
 
                 L1 = ["./python_interface/patterns/logic3/"+str_roll+".tact","./python_interface/patterns/logic3/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                path = tactcombine.combine(L1, L2, "./python_interface/patterns/COMBINAISON.tact")
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
-                time.sleep(1)
+                time.sleep(0.8)
 
 
 
@@ -306,46 +307,36 @@ def make_vibrate(shared_vars): #
 
 if __name__ == '__main__':
 
-    # Manager creation
-    mp.set_start_method('spawn')
-    manager = mp.Manager()
-    shared_vars = manager.dict()
-
     # Shared variables definition
-    shared_vars['roll'] = manager.Value('d', 0.0)
-    shared_vars['pitch'] = manager.Value('d', 0.0)
-    shared_vars['yaw'] = manager.Value('d', 0.0)
-    shared_vars['agl'] = manager.Value('d', 0.0)
-    shared_vars['speed'] = manager.Value('d', 0.0)
-    shared_vars['TAS'] = manager.Value('d', 0.0)
+    shared_vars = {
+    'roll': 0.0,
+    'pitch': 0.0,
+    'yaw': 0.0,
+    'agl': 0.0,
+    'speed': 0.0,
+    'TAS': 0.0,
+    'GEAR': True,
+    'intensite_roll': 0.0,
+    'intensite_pitch': 0.0,
+    'str_roll': '',
+    'str_pitch': '',
+    'user_intensity': 1.0,
+    'mode': 1,
+    'running': True
+    }
 
-    #shared_vars['logic'] = manager.Value('i', 1)
+    vibration_levels = [0]*40  # Liste normale, partagée entre threads
 
-    shared_vars['running'] = manager.Value('b', True)
-    shared_vars['GEAR'] = manager.Value('b', True)
+    # Threads start
+    t_gather = threading.Thread(target=gather_data, args=(shared_vars,))
+    t_roll = threading.Thread(target=roll_processing, args=(shared_vars, vibration_levels))
+    t_pitch = threading.Thread(target=pitch_processing, args=(shared_vars, vibration_levels))
+    t_vibrate = threading.Thread(target=make_vibrate, args=(shared_vars,))
 
-    shared_vars['intensite_roll'] = manager.Value('d', 0.0)
-    shared_vars['intensite_pitch'] = manager.Value('d', 0.0)
-
-    shared_vars['str_roll'] = manager.Value('u', '')
-    shared_vars['str_pitch'] = manager.Value('u', '')
-
-    shared_vars['user_intensity'] = manager.Value('d', 1.0)
-
-    shared_vars['mode'] = manager.Value('i', 1)
-
-    vibration_levels = manager.list([0]*40)
-
-    # Process start
-    p_gather = mp.Process(target=gather_data, args=(shared_vars,))
-    p_roll = mp.Process(target=roll_processing, args=(shared_vars, vibration_levels))
-    p_pitch = mp.Process(target=pitch_processing, args=(shared_vars, vibration_levels))
-    p_vibrate = mp.Process(target=make_vibrate, args=(shared_vars,))
-
-    p_gather.start()
-    p_roll.start()
-    p_pitch.start()
-    p_vibrate.start()
+    t_gather.start()
+    t_roll.start()
+    t_pitch.start()
+    t_vibrate.start()
 
     # GUI initialization
 
@@ -356,7 +347,7 @@ if __name__ == '__main__':
     font = pygame.font.SysFont(None, 24)
 
     def stop_program():
-        shared_vars['running'].value = False
+        shared_vars['running'] = False
 
     quit_button = Button(
         screen, 760, 625, 150, 40,
@@ -443,23 +434,23 @@ if __name__ == '__main__':
 
     # GUI loop
 
-    while shared_vars['running'].value:
+    while shared_vars['running']:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                shared_vars['running'].value = False  # Arrêt des process
+                shared_vars['running'] = False  # Arrêt des process
 
         screen.fill((25, 25, 25))
         pygame.draw.line(screen, (230, 230, 230), (550, 50), (550, 670), 3)
         horizon_surface.fill((0, 0, 0, 0))
 
-        roll = shared_vars['roll'].value
-        pitch = shared_vars['pitch'].value
-        yaw = shared_vars['yaw'].value
+        roll = shared_vars['roll']
+        pitch = shared_vars['pitch']
+        yaw = shared_vars['yaw']
 
-        intensite_roll = shared_vars['intensite_roll'].value
-        agl = shared_vars['agl'].value
-        speed = shared_vars['speed'].value
-        TAS = shared_vars['TAS'].value
+        intensite_roll = shared_vars['intensite_roll']
+        agl = shared_vars['agl']
+        speed = shared_vars['speed']
+        TAS = shared_vars['TAS']
 
         rotated = pygame.transform.rotate(background, roll)
         pitch_offset = pitch * 4.2
@@ -490,10 +481,10 @@ if __name__ == '__main__':
         txt = font_info.render(f"AGL : {agl : .1f} m", True, (230, 230, 230))
         screen.blit(txt, (245, 620))
 
-        shared_vars['user_intensity'].value = slider.getValue() / 100
+        shared_vars['user_intensity'] = slider.getValue() / 100
         txt = font_info.render(f"Logic Mode: {selected_logic['value']}", True, 	(255, 220, 0))
         screen.blit(txt, (955, 475))
-        shared_vars['mode'].value = selected_logic['value']
+        shared_vars['mode'] = selected_logic['value']
 
         # Display pictures of the vest
         screen.blit(VFront, (585, 90))
