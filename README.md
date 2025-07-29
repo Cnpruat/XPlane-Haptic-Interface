@@ -1,30 +1,28 @@
-TOut pourri encore
-
 # XPlane-Haptic-Interface
 
-This repository gathers two independent projects developed during my engineering internship. Both interact with the X-Plane flight simulator:
+This repository gathers two projects developed during my engineering internship. Both interact with the X-Plane flight simulator:
 
 - 🧠 A **Python program** that retrieves real-time flight data from X-Plane and triggers haptic feedback using the **bHaptics TactSuit X40**.
 - ✈️ A **C++ plugin** for X-Plane that displays an interactive window with buttons to trigger failures, adjust weather, or test control surfaces.
 
+ Helps pilots fight spatial disorientation in simulator training faut mettre l'accent sur ça là
+
 ---
-
-
 # 🔧 Contents
 
 ## 1. `python_interface/`
 
 A Python application using:
 
-- `xplaneconnect` to communicate with X-Plane
-- `pygame` and `pygame_widgets` to build a GUI
-- `multiprocessing` to handle real-time data and feedback
+- `XPlaneConnect` to communicate with X-Plane
+- `PyGame` and `PyGame_widgets` to build a GUI
+- `multithreading` to handle real-time data and feedback
 - `bHaptics` SDK to send vibration patterns
 
 **Features:**
 - Displays real-time flight data
-- Sends vibrations based on pitch, roll, altitude, or yaw rate
-- Helps pilots fight spatial disorientation in simulator training
+- Sends vibrations cues based on the plane attitude
+- Different vibrating logics available
 
 ### 📸 GUI Example
 
@@ -36,14 +34,14 @@ A Python application using:
 ### 📸 Vest Feedback Zones
 
 <p align="center">
-   <img src="images/vestfront_diagram.png" alt="Vest diagram" width="400"/>
-   <img src="images/vestback_diagram.png" alt="Vest diagram" width="400"/>
+   <img src="images/vestfront_diagram.png" alt="Vest diagram" width="250"/>
+   <img src="images/vestback_diagram.png" alt="Vest diagram" width="250"/>
 </p>
 *bHaptics TactSuit x40 tactors index. Front on the left, back on the right*
 
 ---
 
-## 2. `xp_plugin/`
+## 2. `Control_panel_XP/`
 
 A plugin for X-Plane (written in C++) using the XPLM SDK:
 
@@ -59,8 +57,8 @@ A plugin for X-Plane (written in C++) using the XPLM SDK:
 </p>
 *Custom window inside X-Plane with interactive controls.*
 
----
 
+---
 # 🏁 How to use
 
 ## Software
@@ -106,6 +104,7 @@ You will also need the following dependencies :
 - [bHaptics python SDK](/python_interface/libs/bhaptics/)
 
 ## Python Program
+### Run the application
 1. The bHaptics player needs to be launched first
 2. Connect the TactSuit and launch XPlane
 3. Run the [main program](/python_interface/main.py)
@@ -113,6 +112,9 @@ You will also need the following dependencies :
    ```bash
    python main.py
    ```
+### Operating logics
+The differents vibrating logics are implemented and can be modified through the `logic1.py`, `logic2.py`, `logic3.py`, `logic4.py` files.
+
 
 ## X-Plane Plugin
 You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plugin/control_panel/) and put it into (for example) :
@@ -123,6 +125,7 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
   Or you can edit the [source code](/Control_panel_XP/control_panel.cpp) and compile it yourself :
 1. Build the plugin using a C++ compiler with the [XPlane SDK](/Control_panel_XP/SDK/)
 2. Copy the compiled folder with the `.xpl` and `.pdb`files into:
+
    ```
    X-Plane/Resources/plugins/XPlaneInterface/
    ```
@@ -131,30 +134,28 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
 
 
 
-
-# 📁 Folder Structure
+---
+# 📁 Repository Structure
 
 ```
 XPlane-Haptic-Interface/
 │
-├── python_interface/     ← Python GUI + haptic integration
-├── xp_plugin/            ← C++ plugin using XPLM SDK
-├── images/               ← Screenshots and diagrams for README
+├── python_interface/     ← Python haptic integration + GUI
+├── xp_plugin/            ← C++ plugin for XPlane
+├── images/               ← Illustrations for README
 ├── .gitignore
-└── README.md             ← This file
+└── README.md
 ```
 
 ---
-
 # 👨‍🔬 Author
 
-**Pierre Bourrandy**
-Engineering student in Mechatronics – ENSIL-ENSCI
-2025 Internship Project – Australia
 
----
+**Pierre Bourrandy**, 4th year Mechatronics Engineering student - **ENSIL-ENSCI**
+This project was part of my engineering internship at **IISRI**.
 
-# 📜 License
+Many thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust throughout the internship.
 
-This project is intended for academic and personal demonstration purposes.
-For commercial or extended use, please contact the author.
+## Contact detail
+pierre.bourrandy@etu.unilim.fr *(ENSIL-ENSCI)*
+
