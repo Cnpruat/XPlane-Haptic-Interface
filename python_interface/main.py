@@ -12,6 +12,11 @@ import tactcombine                                          # CPP library to com
 from bhaptics import haptic_player                          # Bhaptic library
 from bhaptics.haptic_player import BhapticsPosition
 
+# ---------- Python program imports ----------
+import logic1
+import logic2
+import logic3
+
 # ---------- Third-party library imports ----------
 with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initial print
     import pygame_widgets
@@ -54,103 +59,16 @@ def roll_processing(shared_vars, vibration_levels):
         roll = shared_vars['roll']
         user_intensity = shared_vars['user_intensity']
 
-        intensite_roll = 0
-        str_roll = "NOTHING"
+        if shared_vars['mode'] == 1:
+            intensite_roll, str_roll, vibration_levels = logic1.roll(roll,vibration_levels)
 
-        if roll > 2:
-            str_r = "RIGHT_"
+        elif shared_vars['mode'] == 2:
+            intensite_roll, str_roll, vibration_levels = logic2.roll(roll,vibration_levels)
 
-            roll_use = abs(roll)
-            if (roll_use > 2) and (roll_use < 24):
-                intensite_roll = ((roll_use-2)*(100/21))/100*user_intensity
-                str_roll = str_r + "1"
+        elif shared_vars['mode'] == 3:
+            intensite_roll, str_roll, vibration_levels = logic3.roll(roll,vibration_levels)
 
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [12,35]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 24) and (roll_use < 46):
-                intensite_roll = ((roll_use-24)*(100/21))/100*user_intensity
-                str_roll = str_r + "2"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [8,31]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 46) and (roll_use < 68):
-                intensite_roll = ((roll_use-46)*(100/21))/100*user_intensity
-                str_roll =  str_r + "3"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [4,27]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 68) and (roll_use < 90):
-                intensite_roll = ((roll_use-68)*(100/21))/100*user_intensity
-                str_roll = str_r + "4"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [0,23]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 90):
-                intensite_roll = 1*user_intensity
-                str_roll = str_r + "MAX"
-                for i in [0,4,8,12,16,23,27,31,35,39]:
-                    vibration_levels[i] = 100
-
-
-
-        elif roll < 2:
-            str_r = "LEFT_"
-
-            roll_use = abs(roll)
-            if (roll_use > 2) and (roll_use < 24):
-                intensite_roll = ((roll_use-2)*(100/21))/100*user_intensity
-                str_roll = str_r + "1"
-
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [15,32]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 24) and (roll_use < 46):
-                intensite_roll = ((roll_use-24)*(100/21))/100*user_intensity
-                str_roll = str_r + "2"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [11,28]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 46) and (roll_use < 68):
-                intensite_roll = ((roll_use-46)*(100/21))/100*user_intensity
-                str_roll =  str_r + "3"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [7,24]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 68) and (roll_use < 90):
-                intensite_roll = ((roll_use-68)*(100/21))/100*user_intensity
-                str_roll = str_r + "4"
-                for i in [0,4,8,12,16,3,7,11,15,19,20,24,28,32,36,23,27,31,35,39]:
-                    vibration_levels[i] = 0
-                for i in [3,20]:
-                    vibration_levels[i] = intensite_roll*100/user_intensity
-
-            elif (roll_use >= 90):
-                intensite_roll = 1*user_intensity
-                str_roll = str_r + "MAX"
-                for i in [3,7,11,15,19,20,24,28,32,36]:
-                    vibration_levels[i] = 100
-
-
-        else:
-            str_r = ""
-
-
-        shared_vars['intensite_roll'] = intensite_roll
+        shared_vars['intensite_roll'] = intensite_roll*user_intensity
         shared_vars['str_roll'] = str_roll
 
         time.sleep(0.01)  # évite CPU à 100%
@@ -161,98 +79,16 @@ def pitch_processing(shared_vars, vibration_levels):
         pitch = shared_vars['pitch']
         user_intensity = shared_vars['user_intensity']
 
-        intensite_pitch = 0
-        str_pitch = "NOTHING"
+        if shared_vars['mode'] == 1:
+            intensite_pitch, str_pitch, vibration_levels = logic1.pitch(pitch,vibration_levels)
 
-        if pitch > 2:
-            str_p = "UP_"
+        elif shared_vars['mode'] == 2:
+            intensite_pitch, str_pitch, vibration_levels = logic2.pitch(pitch,vibration_levels)
 
-            pitch_use = abs(pitch)
-            if (pitch_use > 2) and (pitch_use < 14):
-                intensite_pitch = ((pitch_use-2)*(100/11))/100*user_intensity
-                str_pitch = str_p + "1"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [33,34]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
+        elif shared_vars['mode'] == 3:
+            intensite_pitch, str_pitch, vibration_levels = logic3.pitch(pitch,vibration_levels)
 
-            elif (pitch_use >= 14) and (pitch_use < 26):
-                intensite_pitch = ((pitch_use-14)*(100/11))/100*user_intensity
-                str_pitch = str_p + "2"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [29,30]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 26) and (pitch_use < 38):
-                intensite_pitch = ((pitch_use-26)*(100/11))/100*user_intensity
-                str_pitch = str_p + "3"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [25,26]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 38) and (pitch_use < 50):
-                intensite_pitch = ((pitch_use-38)*(100/11))/100*user_intensity
-                str_pitch = str_p + "4"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [21,22]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 50):
-                intensite_pitch = 1*user_intensity
-                str_pitch = str_p + "MAX"
-                for i in [21,22,25,26,29,30,33,34]:
-                    vibration_levels[i] = 100
-
-
-        elif pitch < 2:
-            str_p = "DOWN_"
-
-            pitch_use = abs(pitch)
-            if (pitch_use > 2) and (pitch_use < 14):
-                intensite_pitch = ((pitch_use-2)*(100/11))/100*user_intensity
-                str_pitch = str_p + "1"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [13,14]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 14) and (pitch_use < 26):
-                intensite_pitch = ((pitch_use-14)*(100/11))/100*user_intensity
-                str_pitch = str_p + "2"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [9,10]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 26) and (pitch_use < 38):
-                intensite_pitch = ((pitch_use-26)*(100/11))/100*user_intensity
-                str_pitch = str_p + "3"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [5,6]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 38) and (pitch_use < 50):
-                intensite_pitch = ((pitch_use-38)*(100/11))/100*user_intensity
-                str_pitch = str_p + "4"
-                for i in [1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30,33,34,37,38]:
-                    vibration_levels[i] = 0
-                for i in [1,2]:
-                    vibration_levels[i] = intensite_pitch*100/user_intensity
-
-            elif (pitch_use >= 50):
-                intensite_pitch = 1*user_intensity
-                str_pitch = str_p + "4"
-                for i in [1,2,5,6,9,10,13,14]:
-                    vibration_levels[i] = 100
-
-        else:
-            str_p = ""
-
-        shared_vars['intensite_pitch'] = intensite_pitch
+        shared_vars['intensite_pitch'] = intensite_pitch*user_intensity
         shared_vars['str_pitch'] = str_pitch
         time.sleep(0.01)
 
