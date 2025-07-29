@@ -1,0 +1,7 @@
+keyboard==0.13.5
+pybind11==3.0.0
+pygame==2.6.1
+pygame_widgets==1.2.2
+setuptools==80.8.0
+tactcombine==0.1
+websocket_client==0.57.0

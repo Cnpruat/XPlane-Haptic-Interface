@@ -4,7 +4,6 @@ import os
 import contextlib
 import sys
 import time
-import multiprocessing as mp
 import threading
 
 # ---------- Local library imports ----------
@@ -387,7 +386,7 @@ if __name__ == '__main__':
         pygame.draw.circle(circle_surf, (255, 255, 0, alpha), (16, 16), 16)
         surface.blit(circle_surf, (x - 16, y - 16))  # centered around the point (x, y)
 
-    slider = Slider(screen, 640, 550, 200, 20, min=0, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
+    slider = Slider(screen, 640, 550, 200, 20, min=1, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
 
     # --- Logic mode selection (1, 2, or 3)
     selected_logic = {'value': 1}  # Valeur partagée dans l'interface

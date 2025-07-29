@@ -1,3 +1,5 @@
+TOut pourri encore
+
 # XPlane-Haptic-Interface
 
 This repository gathers two independent projects developed during my engineering internship. Both interact with the X-Plane flight simulator:
@@ -95,6 +97,31 @@ XPlane-Haptic-Interface/
 ```
 
 ---
+
+## Requirements
+
+A precompiled version of the tactcombine library is included for Windows / Python 3.11:
+
+combine/prebuilt/tactcombine.cp311-win_amd64.pyd
+
+This allows immediate use without requiring compilation.
+
+from combine import tactcombine (en ligne de code)
+
+For other operating systems or Python versions, you'll need to build the library manually from the sources located in the combine/ folder.
+🔧 Manual Build
+
+To build the library yourself, you will need:
+
+    CMake
+
+    pybind11
+
+    A C++11-compatible compiler
+
+pip install ./python_interface/combine (en lgine de code)
+
+The compiled file will be added to your python path
 
 ## 👨‍🔬 Author
 
