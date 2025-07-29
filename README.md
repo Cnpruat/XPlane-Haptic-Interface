@@ -9,9 +9,10 @@ This repository gathers two independent projects developed during my engineering
 
 ---
 
-## 🔧 Contents
 
-### 1. `python_interface/`
+# 🔧 Contents
+
+## 1. `python_interface/`
 
 A Python application using:
 
@@ -25,14 +26,14 @@ A Python application using:
 - Sends vibrations based on pitch, roll, altitude, or yaw rate
 - Helps pilots fight spatial disorientation in simulator training
 
-#### 📸 GUI Example
+### 📸 GUI Example
 
 <p align="center">
    <img src="images/GUI_py.png" alt="Python GUI" width="850"/>
 </p>
 *Real-time data from X-Plane with attitude visualisation.*
 
-#### 📸 Vest Feedback Zones
+### 📸 Vest Feedback Zones
 
 <p align="center">
    <img src="images/vestfront_diagram.png" alt="Vest diagram" width="400"/>
@@ -42,18 +43,17 @@ A Python application using:
 
 ---
 
-### 2. `xp_plugin/`
+## 2. `xp_plugin/`
 
-A native plugin for X-Plane (written in C++) using the XPLM SDK:
+A plugin for X-Plane (written in C++) using the XPLM SDK:
 
 - Opens a custom window inside X-Plane
 - Provides buttons to:
   - Reset all failures
   - Inject various weather conditions
   - Disable control surfaces (rudder, elevator, ailerons, etc.)
-- Fully compatible with X-Plane 11 and 12
 
-#### 📸 Plugin Window
+### 📸 Plugin Window
 <p align="center">
    <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="400"/>
 </p>
@@ -61,30 +61,78 @@ A native plugin for X-Plane (written in C++) using the XPLM SDK:
 
 ---
 
-## 🏁 How to Run
+# 🏁 How to use
 
-### Python Program
-1. Install requirements:
-   ```bash
-   pip install pygame pygame_widgets xplaneconnect
-   ```
-2. Connect your TactSuit and X-Plane simulator
-3. Launch the GUI:
+## Software
+- Windows 10/11
+- Python 3.13.5
+- Visual studio code (recommended)
+- Microsoft visual studio (recommended)
+- [bHaptics player](https://www.bhaptics.com/software/player/)
+- XPlane 11/12 (tested)
+
+## Requirements
+
+All the librairies needed are listed in [requirements.txt](/python_interface/requirements.txt).
+```bash
+keyboard==0.13.5
+pybind11==3.0.0
+pygame==2.6.1
+pygame_widgets==1.2.2
+setuptools==80.8.0
+websocket_client==0.57.0
+
+tactcombine==0.1
+```
+### Standard librairies
+You can install all the standard python libraries with :
+
+```bash
+pip install keyboard==0.13.5 pybind11==3.0.0 pygame==2.6.1 pygame_widgets==1.2.2 setuptools==80.8.0 websocket_client==0.57.0
+```
+### Custom librairy
+Since `tactcombine` is a custom library, you will need to build it manually from the `python_interface/combine/` directory using pybind11 :
+
+```bash
+pip install ./python_interface/combine
+```
+The library will be added to your python PATH.
+
+(A [precompiled version of the tactcombine library](/python_interface/combine/tactcombine.cp313-win_amd64.pyd) is also included for Windows. This allows immediate use without requiring compilation.)
+
+### Local SDK/plugin
+You will also need the following dependencies :
+- [XPlane connect Plugin](/python_interface/libs/xpc)
+- [bHaptics python SDK](/python_interface/libs/bhaptics/)
+
+## Python Program
+1. The bHaptics player needs to be launched first
+2. Connect the TactSuit and launch XPlane
+3. Run the [main program](/python_interface/main.py)
+
    ```bash
    python main.py
    ```
 
-### X-Plane Plugin
-1. Build the plugin using a C++ compiler with the XPLM SDK
-2. Copy the compiled `.xpl` plugin into:
+## X-Plane Plugin
+You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plugin/control_panel/) and put it into (for example) :
+  ```
+   C:\X-Plane 12\Resources\plugins
+  ```
+
+  Or you can edit the [source code](/Control_panel_XP/control_panel.cpp) and compile it yourself :
+1. Build the plugin using a C++ compiler with the [XPlane SDK](/Control_panel_XP/SDK/)
+2. Copy the compiled folder with the `.xpl` and `.pdb`files into:
    ```
    X-Plane/Resources/plugins/XPlaneInterface/
    ```
-3. Launch X-Plane and activate the plugin from the **Plugins** menu
+3. Launch X-Plane and activate the plugin from the
 
----
 
-## 📁 Folder Structure
+
+
+
+# 📁 Folder Structure
 
 ```
 XPlane-Haptic-Interface/
@@ -98,40 +146,15 @@ XPlane-Haptic-Interface/
 
 ---
 
-## Requirements
-
-A precompiled version of the tactcombine library is included for Windows / Python 3.11:
-
-combine/prebuilt/tactcombine.cp311-win_amd64.pyd
-
-This allows immediate use without requiring compilation.
-
-from combine import tactcombine (en ligne de code)
-
-For other operating systems or Python versions, you'll need to build the library manually from the sources located in the combine/ folder.
-🔧 Manual Build
-
-To build the library yourself, you will need:
-
-    CMake
-
-    pybind11
-
-    A C++11-compatible compiler
-
-pip install ./python_interface/combine (en lgine de code)
-
-The compiled file will be added to your python path
-
-## 👨‍🔬 Author
+# 👨‍🔬 Author
 
 **Pierre Bourrandy**
 Engineering student in Mechatronics – ENSIL-ENSCI
-2025 Internship Project – Australia 🇦🇺
+2025 Internship Project – Australia
 
 ---
 
-## 📜 License
+# 📜 License
 
 This project is intended for academic and personal demonstration purposes.
 For commercial or extended use, please contact the author.

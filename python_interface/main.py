@@ -16,6 +16,7 @@ from bhaptics.haptic_player import BhapticsPosition
 import logic1
 import logic2
 import logic3
+import logic4
 
 # ---------- Third-party library imports ----------
 with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initial print
@@ -68,6 +69,9 @@ def roll_processing(shared_vars, vibration_levels):
         elif shared_vars['mode'] == 3:
             intensite_roll, str_roll, vibration_levels = logic3.roll(roll,vibration_levels)
 
+        elif shared_vars['mode'] == 4:
+            intensite_roll, str_roll, vibration_levels = logic4.roll(roll,vibration_levels)
+
         shared_vars['intensite_roll'] = intensite_roll*user_intensity
         shared_vars['str_roll'] = str_roll
 
@@ -87,6 +91,9 @@ def pitch_processing(shared_vars, vibration_levels):
 
         elif shared_vars['mode'] == 3:
             intensite_pitch, str_pitch, vibration_levels = logic3.pitch(pitch,vibration_levels)
+
+        elif shared_vars['mode'] == 4:
+            intensite_pitch, str_pitch, vibration_levels = logic4.pitch(pitch,vibration_levels)
 
         shared_vars['intensite_pitch'] = intensite_pitch*user_intensity
         shared_vars['str_pitch'] = str_pitch
@@ -120,7 +127,7 @@ def make_vibrate(shared_vars): #
                 path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")
-                time.sleep(1)
+                time.sleep(0.9)
 
             elif shared_vars['mode'] == 3:
                 str_roll = shared_vars['str_roll']
@@ -134,6 +141,20 @@ def make_vibrate(shared_vars): #
                 player.register("Comb", path)
                 player.submit_registered("Comb")
                 time.sleep(0.8)
+
+            elif shared_vars['mode'] == 4:
+                str_roll = shared_vars['str_roll']
+                str_pitch = shared_vars['str_pitch']
+                intensite_roll = shared_vars['intensite_roll']
+                intensite_pitch = shared_vars['intensite_pitch']
+
+                L1 = ["./python_interface/patterns/logic4/"+str_roll+".tact","./python_interface/patterns/logic4/"+str_pitch+".tact"]
+                L2 = [intensite_roll, intensite_pitch]
+                print(L1, L2)
+                path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
+                player.register("Comb", path)
+                player.submit_registered("Comb")
+                time.sleep(0.1)
 
 
 
@@ -185,7 +206,7 @@ if __name__ == '__main__':
         shared_vars['running'] = False
 
     quit_button = Button(
-        screen, 760, 625, 150, 40,
+        screen, 775, 625, 150, 40,
         text='STOP',
         fontSize=30,
         margin=20,
@@ -222,7 +243,7 @@ if __name__ == '__main__':
         pygame.draw.circle(circle_surf, (255, 255, 0, alpha), (16, 16), 16)
         surface.blit(circle_surf, (x - 16, y - 16))  # centered around the point (x, y)
 
-    slider = Slider(screen, 640, 550, 200, 20, min=1, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
+    slider = Slider(screen, 660, 550, 200, 20, min=1, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
 
     # --- Logic mode selection (1, 2, or 3)
     selected_logic = {'value': 1}  # Valeur partagée dans l'interface
@@ -231,7 +252,7 @@ if __name__ == '__main__':
         selected_logic['value'] = mode
 
     logic_btn1 = Button(
-        screen, 625, 475, 100, 30,
+        screen, 645, 475, 100, 30,
         text='Logic 1',
         onClick=lambda: set_logic_mode(1),
         fontSize=24,
@@ -243,7 +264,7 @@ if __name__ == '__main__':
     )
 
     logic_btn2 = Button(
-        screen, 735, 475, 100, 30,
+        screen, 755, 475, 100, 30,
         text='Logic 2',
         onClick=lambda: set_logic_mode(2),
         fontSize=24,
@@ -255,9 +276,21 @@ if __name__ == '__main__':
     )
 
     logic_btn3 = Button(
-        screen, 845, 475, 100, 30,
+        screen, 865, 475, 100, 30,
         text='Logic 3',
         onClick=lambda: set_logic_mode(3),
+        fontSize=24,
+        radius=10,
+        textColour=(230, 230, 230),
+        inactiveColour=(70, 130, 180),
+        hoverColour=(50, 110, 160),
+        pressedColour=(80, 80, 80),
+    )
+
+    logic_btn4 = Button(
+        screen, 975, 475, 100, 30,
+        text='Logic 4',
+        onClick=lambda: set_logic_mode(4),
         fontSize=24,
         radius=10,
         textColour=(230, 230, 230),
@@ -307,7 +340,8 @@ if __name__ == '__main__':
         screen.blit(txt, (75, 620))
 
         txt = font_info.render(f"Intensity : {slider.getValue():.0f} %", True, (255, 220, 0))
-        screen.blit(txt, (895, 547))
+        screen.blit(txt, (915, 547))
+        shared_vars['user_intensity'] = slider.getValue() / 100
 
         txt = font_info.render(f"Gspeed : {speed : .1f} m/s", True, (230, 230, 230))
         screen.blit(txt, (245, 540))
@@ -316,9 +350,8 @@ if __name__ == '__main__':
         txt = font_info.render(f"AGL : {agl : .1f} m", True, (230, 230, 230))
         screen.blit(txt, (245, 620))
 
-        shared_vars['user_intensity'] = slider.getValue() / 100
         txt = font_info.render(f"Logic Mode: {selected_logic['value']}", True, 	(255, 220, 0))
-        screen.blit(txt, (955, 475))
+        screen.blit(txt, (785, 430))
         shared_vars['mode'] = selected_logic['value']
 
         # Display pictures of the vest

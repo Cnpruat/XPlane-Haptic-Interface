@@ -2,6 +2,7 @@
 #include <pybind11/stl.h>
 #include "json.hpp"
 #include <fstream>
+#include <iostream>
 
 namespace py = pybind11;
 using json = nlohmann::json;
@@ -24,6 +25,7 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 
         for (auto &track : tracks)
         {
+            std::cout << "Traitement du fichier : " << path << std::endl;
             try
             {
                 auto &front_points = track["effects"][0]["modes"]["VestFront"]["pathMode"]["feedback"][0]["pointList"];
@@ -48,6 +50,9 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
                 {
                     front_points[j]["intensity"] = intensities[incr];
                     back_points[j]["intensity"] = intensities[incr];
+
+                    std::cout << "fr " << front_points[j]["intensity"] << "\n"
+                              << "bck" << back_points[j]["intensity"] << std::endl;
                 }
             }
 
@@ -59,6 +64,7 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 
         combined["project"]["tracks"].insert(
             combined["project"]["tracks"].end(), tracks.begin(), tracks.end());
+
         incr++;
     }
 
