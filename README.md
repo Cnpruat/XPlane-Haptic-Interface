@@ -100,8 +100,8 @@ The library will be added to your python PATH.
 
 ### Local SDK/plugin
 You will also need the following dependencies :
-- [XPlane connect Plugin](/python_interface/libs/xpc)
-- [bHaptics python SDK](/python_interface/libs/bhaptics/)
+- [XPlane connect Plugin](https://github.com/nasa/XPlaneConnect) included [here](/python_interface/libs/xpc)
+- [bHaptics python SDK](https://github.com/bhaptics/tact-python/) included [here](/python_interface/libs/bhaptics/)
 
 ## Python Program
 ### Run the application
@@ -123,16 +123,13 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
   ```
 
   Or you can edit the [source code](/Control_panel_XP/control_panel.cpp) and compile it yourself :
-1. Build the plugin using a C++ compiler with the [XPlane SDK](/Control_panel_XP/SDK/)
-2. Copy the compiled folder with the `.xpl` and `.pdb`files into:
+1. Build the plugin using a C++ compiler with the [XPlane SDK](https://developer.x-plane.com/sdk/) included [here](/Control_panel_XP/SDK/)
+2. Copy the compiled folder with the `.xpl` and `.pdb`files into :
 
    ```
    X-Plane/Resources/plugins/XPlaneInterface/
    ```
-3. Launch X-Plane and activate the plugin from the
-
-
-
+3. Launch X-Plane and use the plugin
 
 ---
 # 📁 Repository Structure
