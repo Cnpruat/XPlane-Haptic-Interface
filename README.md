@@ -82,7 +82,7 @@ You will also need the following dependencies :
 #### XPlane
 - [XPlane connect Plugin](https://github.com/nasa/XPlaneConnect) included [here](/Control_panel_XP/XPlaneConnect/) (XPlane plugin)
 
-Copy the [folder](/Control_panel_XP/XPlaneConnect/) into :
+   Copy the [folder](/Control_panel_XP/XPlaneConnect/) into :
 
    ```
     C:\X-Plane 12\Resources\plugins
@@ -119,7 +119,7 @@ The differents vibrating logics are implemented and can be modified through the 
 
 ## X-Plane Plugin
 ### Setup
-You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plugin/control_panel/) and put it into (for example) :
+You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plugin/control_panel/) and put it into :
   ```
    C:\X-Plane 12\Resources\plugins
   ```
@@ -143,7 +143,6 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
    <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="250"/>
 </p>
 
-*Custom window inside X-Plane with interactive controls*
 
 If you close the control panel, you can still re-open on the upper menu :
 <p align="center">
