@@ -24,39 +24,14 @@ A Python application using:
 - Sends vibrations cues based on the plane attitude
 - Different vibrating logics available
 
-### 📸 GUI Example
-
-<p align="center">
-   <img src="images/GUI_py.png" alt="Python GUI" width="850"/>
-</p>
-*Real-time data from X-Plane with attitude visualisation.*
-
 ### 📸 Vest Feedback Zones
 
-<p align="center">
-   <img src="images/vestfront_diagram.png" alt="Vest diagram" width="250"/>
-   <img src="images/vestback_diagram.png" alt="Vest diagram" width="250"/>
-</p>
-*bHaptics TactSuit x40 tactors index. Front on the left, back on the right*
 
 ---
 
 ## 2. `Control_panel_XP/`
 
-A plugin for X-Plane (written in C++) using the XPLM SDK:
-
-- Opens a custom window inside X-Plane
-- Provides buttons to:
-  - Reset all failures
-  - Inject various weather conditions
-  - Disable control surfaces (rudder, elevator, ailerons, etc.)
-
-### 📸 Plugin Window
-<p align="center">
-   <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="400"/>
-</p>
-*Custom window inside X-Plane with interactive controls.*
-
+A plugin for X-Plane (written in C++) using the XPlane SDK
 
 ---
 # 🏁 How to use
@@ -66,7 +41,7 @@ A plugin for X-Plane (written in C++) using the XPLM SDK:
 - Python 3.13.5 (tested)
 - Visual studio code (recommended)
 - Microsoft visual studio (recommended)
-- [bHaptics player](https://www.bhaptics.com/software/player/) 2.6.3.86 (86)
+- [bHaptics player](https://www.bhaptics.com/software/player/) 2.6.3.86 (86) (at least)
 - XPlane 11/12 (tested)
 
 ## Requirements
@@ -100,8 +75,18 @@ The library will be added to your python PATH.
 
 ### Local SDK/plugin
 You will also need the following dependencies :
-- [XPlane connect Plugin](https://github.com/nasa/XPlaneConnect) included [here](/python_interface/libs/xpc)
+#### Python
 - [bHaptics python SDK](https://github.com/bhaptics/tact-python/) included [here](/python_interface/libs/bhaptics/)
+- [XPlane connect Plugin](https://github.com/nasa/XPlaneConnect) included [here](/python_interface/libs/xpc) (Python)
+
+#### XPlane
+- [XPlane connect Plugin](https://github.com/nasa/XPlaneConnect) included [here](/Control_panel_XP/XPlaneConnect/) (XPlane plugin)
+
+Copy the [folder](/Control_panel_XP/XPlaneConnect/) into :
+
+   ```
+    C:\X-Plane 12\Resources\plugins
+   ```
 
 ## Python Program
 ### Run the application
@@ -112,11 +97,28 @@ You will also need the following dependencies :
    ```bash
    python main.py
    ```
+
+### Usage
+- The GUI will automatically opens at launch
+- Real-time flight data displayed
+- Real-time haptic cues displayed
+
+
+<p align="center">
+   <img src="images/GUI_py.png" alt="Python GUI" width="850"/>
+</p>
+
+*GUI while the plane is pitching and rolling*
+
+
+You can use the buttons to switch between the different operating logics. A slider allows you tu adjust the intensity of the vibrations.
+
 ### Operating logics
 The differents vibrating logics are implemented and can be modified through the `logic1.py`, `logic2.py`, `logic3.py`, `logic4.py` files.
 
 
 ## X-Plane Plugin
+### Setup
 You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plugin/control_panel/) and put it into (for example) :
   ```
    C:\X-Plane 12\Resources\plugins
@@ -127,9 +129,26 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
 2. Copy the compiled folder with the `.xpl` and `.pdb`files into :
 
    ```
-   X-Plane/Resources/plugins/XPlaneInterface/
+    C:\X-Plane 12\Resources\plugins
    ```
 3. Launch X-Plane and use the plugin
+
+### Usage
+- The control panel will automatically opens in XPlane
+- Provides buttons to:
+  - Trigger failures (engine, bird strike, control surfaces)
+  - Change weather conditions
+
+<p align="center">
+   <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="250"/>
+</p>
+
+*Custom window inside X-Plane with interactive controls*
+
+If you close the control panel, you can still re-open on the upper menu :
+<p align="center">
+   <img src="images/menu_xp.png" alt="XPlane control panel" width="400"/>
+</p>
 
 ---
 # 📁 Repository Structure
