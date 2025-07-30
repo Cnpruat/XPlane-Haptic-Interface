@@ -96,7 +96,7 @@ pip install ./python_interface/combine
 ```
 The library will be added to your python PATH.
 
-(A [precompiled version of the tactcombine library](/python_interface/combine/tactcombine.cp313-win_amd64.pyd) is also included for Windows. This allows immediate use without requiring compilation.)
+(A [precompiled version of the tactcombine library](/python_interface/combine/tactcombine.cp313-win_amd64.pyd) is also included for Windows. This allows immediate use without requiring compilation)
 
 ### Local SDK/plugin
 You will also need the following dependencies :
