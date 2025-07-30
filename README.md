@@ -63,10 +63,10 @@ A plugin for X-Plane (written in C++) using the XPLM SDK:
 
 ## Software
 - Windows 10/11
-- Python 3.13.5
+- Python 3.13.5 (tested)
 - Visual studio code (recommended)
 - Microsoft visual studio (recommended)
-- [bHaptics player](https://www.bhaptics.com/software/player/)
+- [bHaptics player](https://www.bhaptics.com/software/player/) 2.6.3.86 (86)
 - XPlane 11/12 (tested)
 
 ## Requirements
@@ -149,7 +149,7 @@ XPlane-Haptic-Interface/
 
 
 **Pierre Bourrandy**, 4th year Mechatronics Engineering student - **ENSIL-ENSCI**
-This project was part of my engineering internship at **IISRI**.
+This project was part of my internship at **IISRI**.
 
 Many thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust throughout the internship.
 

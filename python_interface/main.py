@@ -150,7 +150,6 @@ def make_vibrate(shared_vars): #
 
                 L1 = ["./python_interface/patterns/logic4/"+str_roll+".tact","./python_interface/patterns/logic4/"+str_pitch+".tact"]
                 L2 = [intensite_roll, intensite_pitch]
-                print(L1, L2)
                 path = tactcombine.combine(L1, L2, "./python_interface/patterns/BLANK.tact")
                 player.register("Comb", path)
                 player.submit_registered("Comb")

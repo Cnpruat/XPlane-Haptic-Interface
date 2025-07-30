@@ -1,3 +1,4 @@
+// ✅ Voici la version corrigée et compilable de ton fichier tactcombine.cpp
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "json.hpp"
@@ -11,7 +12,7 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 {
     std::ifstream f_base(base_file_path);
     if (!f_base)
-        throw std::runtime_error("Impossible d'ouvrir COMBINAISON.tact");
+        throw std::runtime_error("Unable to open BLANK.tact");
     json combined = json::parse(f_base);
 
     size_t incr = 0;
@@ -25,18 +26,27 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 
         for (auto &track : tracks)
         {
-            std::cout << "Traitement du fichier : " << path << std::endl;
             try
             {
                 auto &front_points = track["effects"][0]["modes"]["VestFront"]["pathMode"]["feedback"][0]["pointList"];
-                auto &back_points = track["effects"][0]["modes"]["VestBack"]["pathMode"]["feedback"][0]["pointList"];
-                for (size_t j = 0; j < std::min(front_points.size(), back_points.size()); ++j)
+                for (auto &pt : front_points)
                 {
-                    front_points[j]["intensity"] = intensities[incr];
-                    back_points[j]["intensity"] = intensities[incr];
+                    pt["intensity"] = intensities[incr];
                 }
             }
+            catch (...)
+            {
+                continue;
+            }
 
+            try
+            {
+                auto &back_points = track["effects"][0]["modes"]["VestBack"]["pathMode"]["feedback"][0]["pointList"];
+                for (auto &pt : back_points)
+                {
+                    pt["intensity"] = intensities[incr];
+                }
+            }
             catch (...)
             {
                 continue;
@@ -45,17 +55,24 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
             try
             {
                 auto &front_points = track["effects"][0]["modes"]["VestFront"]["dotMode"]["feedback"][0]["pointList"];
-                auto &back_points = track["effects"][0]["modes"]["VestBack"]["dotMode"]["feedback"][0]["pointList"];
-                for (size_t j = 0; j < std::min(front_points.size(), back_points.size()); ++j)
+                for (auto &pt : front_points)
                 {
-                    front_points[j]["intensity"] = intensities[incr];
-                    back_points[j]["intensity"] = intensities[incr];
-
-                    std::cout << "fr " << front_points[j]["intensity"] << "\n"
-                              << "bck" << back_points[j]["intensity"] << std::endl;
+                    pt["intensity"] = intensities[incr];
                 }
             }
+            catch (...)
+            {
+                continue;
+            }
 
+            try
+            {
+                auto &back_points = track["effects"][0]["modes"]["VestBack"]["dotMode"]["feedback"][0]["pointList"];
+                for (auto &pt : back_points)
+                {
+                    pt["intensity"] = intensities[incr];
+                }
+            }
             catch (...)
             {
                 continue;
@@ -76,6 +93,6 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 
 PYBIND11_MODULE(tactcombine, m)
 {
-    m.doc() = "Module de fusion .tact optimisé en C++";
-    m.def("combine", &combine, "Combine plusieurs fichiers .tact");
+    m.doc() = "Optimized .tact file merging library for python in C++";
+    m.def("combine", &combine, "Combine several .tact files and edit their intensity");
 }
