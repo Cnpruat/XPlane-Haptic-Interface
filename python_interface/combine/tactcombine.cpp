@@ -1,9 +1,7 @@
-// ✅ Voici la version corrigée et compilable de ton fichier tactcombine.cpp
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "json.hpp"
 #include <fstream>
-#include <iostream>
 
 namespace py = pybind11;
 using json = nlohmann::json;

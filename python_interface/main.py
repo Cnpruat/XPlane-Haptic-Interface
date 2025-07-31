@@ -19,7 +19,7 @@ import logic3
 import logic4
 
 # ---------- Third-party library imports ----------
-with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initial print
+with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f): # To avoid initial prints
     import pygame_widgets
     import pygame
     from pygame_widgets.slider import Slider
