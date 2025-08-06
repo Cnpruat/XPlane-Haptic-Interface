@@ -54,6 +54,14 @@ def gather_data(shared_vars):
         except (TimeoutError, ConnectionResetError):
             print("Not connected")
 
+            shared_vars['roll'] = 0
+            shared_vars['pitch'] = 0
+            shared_vars['yaw'] = 0
+            shared_vars['agl'] = 0
+            shared_vars['speed'] = 0
+            shared_vars['TAS'] = 0
+            shared_vars['GEAR'] = True
+
 
 def roll_processing(shared_vars, vibration_levels):
     while shared_vars['running']:
@@ -319,9 +327,14 @@ if __name__ == '__main__':
         speed = shared_vars['speed']
         TAS = shared_vars['TAS']
 
-        rotated = pygame.transform.rotate(background, roll)
+
+        temp_surface = pygame.Surface((900, 900), pygame.SRCALPHA)
+        # Pitch
         pitch_offset = pitch * 4.2
-        rect = rotated.get_rect(center=(CentreSurf[0], CentreSurf[1] + pitch_offset))
+        temp_surface.blit(background, background.get_rect(center=(450, 450 + pitch_offset)))
+        # Roll
+        rotated = pygame.transform.rotate(temp_surface, roll)
+        rect = rotated.get_rect(center=CentreSurf)
         horizon_surface.blit(rotated, rect)
 
         plane_rect = plane.get_rect(center=CentreSurf)
