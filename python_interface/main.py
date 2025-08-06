@@ -224,6 +224,9 @@ if __name__ == '__main__':
         radius=20,
         onClick=stop_program)
 
+    icon = pygame.image.load("./python_interface/assets/IISRI_icon.png")
+    pygame.display.set_icon(icon)
+
     background = pygame.image.load("./python_interface/assets/horizon.png").convert_alpha()
     background = pygame.transform.scale(background, (700, 700))
     plane = pygame.image.load("./python_interface/assets/avion.png").convert_alpha()

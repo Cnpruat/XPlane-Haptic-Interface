@@ -42,7 +42,9 @@ def roll(roll,vibration_levels):
         elif (roll_use >= 90):
             intensite_roll = 1
             str_roll = str_r + "MAX"
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [3,7,11,15,16,19,20,24,28,32,36,39]:
+                vibration_levels[i] = 0
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = 100
 
 
@@ -87,7 +89,9 @@ def roll(roll,vibration_levels):
         elif (roll_use >= 90):
             intensite_roll = 1
             str_roll = str_r + "MAX"
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [0, 4, 8, 12, 16, 19, 23, 27, 31, 35, 36, 39]:
+                vibration_levels[i] = 0
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = 100
 
 

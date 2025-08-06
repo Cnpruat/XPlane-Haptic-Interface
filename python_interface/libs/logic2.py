@@ -11,35 +11,35 @@ def roll(roll,vibration_levels):
             str_roll = str_r + "1"
 
 
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 24) and (roll_use < 46):
             intensite_roll = ((roll_use-24)*(100/21))/100
             str_roll = str_r + "2"
 
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 46) and (roll_use < 68):
             intensite_roll = ((roll_use-46)*(100/21))/100
             str_roll =  str_r + "3"
 
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 68) and (roll_use < 90):
             intensite_roll = ((roll_use-68)*(100/21))/100
             str_roll = str_r + "4"
 
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 90):
             intensite_roll = 1
             str_roll = str_r + "MAX"
 
-            for i in [0,4,8,12,16,23,27,31,35,39]:
+            for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = 100
 
 
@@ -52,35 +52,35 @@ def roll(roll,vibration_levels):
             intensite_roll = ((roll_use-2)*(100/21))/100
             str_roll = str_r + "1"
 
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 24) and (roll_use < 46):
             intensite_roll = ((roll_use-24)*(100/21))/100
             str_roll = str_r + "2"
 
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 46) and (roll_use < 68):
             intensite_roll = ((roll_use-46)*(100/21))/100
             str_roll =  str_r + "3"
 
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 68) and (roll_use < 90):
             intensite_roll = ((roll_use-68)*(100/21))/100
             str_roll = str_r + "4"
 
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = intensite_roll*100
 
         elif (roll_use >= 90):
             intensite_roll = 1
             str_roll = str_r + "MAX"
 
-            for i in [3,7,11,15,19,20,24,28,32,36]:
+            for i in [3,7,11,15,20,24,28,32]:
                 vibration_levels[i] = 100
 
 
