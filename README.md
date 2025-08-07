@@ -131,7 +131,7 @@ If you close the control panel, you can still re-open on the upper menu :
 ```
 XPlane-Haptic-Interface/
 │
-├── python_interface/     # Python haptic integration + GUI
+├── python_interface/            ← Python haptic integration + GUI
     ├── assets/
     ├── combine/
     ├── libs/
@@ -142,7 +142,7 @@ XPlane-Haptic-Interface/
     ├── XPlaneConnect/
     ├── plugin_output/
     └── control_panel.cpp
-├── images/               ← Illustrations for README
+├── images/                      ← Illustrations for README
 ├── .gitignore
 └── README.md
 ```
