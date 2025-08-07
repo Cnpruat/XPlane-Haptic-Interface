@@ -155,8 +155,17 @@ If you close the control panel, you can still re-open on the upper menu :
 ```
 XPlane-Haptic-Interface/
 │
-├── python_interface/     ← Python haptic integration + GUI
-├── xp_plugin/            ← C++ plugin for XPlane
+├── python_interface/     # Python haptic integration + GUI
+    ├── assets/
+    ├── combine/
+    ├── libs/
+    ├── patterns/
+    └── main.py
+├── control_panel_xp/            ← C++ plugin for XPlane
+    ├── SDK/
+    ├── XPlaneConnect/
+    ├── plugin_output/
+    └── control_panel.cpp
 ├── images/               ← Illustrations for README
 ├── .gitignore
 └── README.md
@@ -169,7 +178,7 @@ XPlane-Haptic-Interface/
 **Pierre Bourrandy**, 4th year Mechatronics Engineering student - **ENSIL-ENSCI**
 This project was part of my internship at **IISRI**.
 
-Many thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust throughout the internship.
+Thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust throughout the internship.
 
 ## Contact detail
 pierre.bourrandy@etu.unilim.fr *(ENSIL-ENSCI)*
