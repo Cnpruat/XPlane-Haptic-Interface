@@ -24,6 +24,8 @@ std::string combine(const std::vector<std::string> &tact_paths, const std::vecto
 
         for (auto &track : tracks)
         {
+            // We use 4 try because the patterns will sometimes use pathMode or dotMode and  because the
+            // patterns will sometimes be on the front of the vest, sometime on the back and sometime on both.
             try
             {
                 auto &front_points = track["effects"][0]["modes"]["VestFront"]["pathMode"]["feedback"][0]["pointList"];
