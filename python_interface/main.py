@@ -83,7 +83,7 @@ def roll_processing(shared_vars, vibration_levels):
         shared_vars['intensite_roll'] = intensite_roll*user_intensity
         shared_vars['str_roll'] = str_roll
 
-        time.sleep(0.01)  # évite CPU à 100%
+        time.sleep(0.01)
 
 
 def pitch_processing(shared_vars, vibration_levels):
