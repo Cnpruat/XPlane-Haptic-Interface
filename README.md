@@ -8,32 +8,7 @@ This repository gathers two projects developed during my engineering internship.
  Helps pilots fight spatial disorientation in simulator training faut mettre l'accent sur ça là
 
 ---
-# 🔧 Contents
 
-## 1. `python_interface/`
-
-A Python application using:
-
-- `XPlaneConnect` to communicate with X-Plane
-- `PyGame` and `PyGame_widgets` to build a GUI
-- `multithreading` to handle real-time data and feedback
-- `bHaptics` SDK to send vibration patterns
-
-**Features:**
-- Displays real-time flight data
-- Sends vibrations cues based on the plane attitude
-- Different vibrating logics available
-
-### 📸 Vest Feedback Zones
-
-
----
-
-## 2. `Control_panel_XP/`
-
-A plugin for X-Plane (written in C++) using the XPlane SDK
-
----
 # 🏁 How to use
 
 ## Software
@@ -136,8 +111,9 @@ You can either use the [pre-compiled plugin](/Control_panel_XP/plugin_output/plu
 ### Usage
 - The control panel will automatically opens in XPlane
 - Provides buttons to:
-  - Trigger failures (engine, bird strike, control surfaces)
+  - Trigger and reset failures (engine, bird strike, control surfaces)
   - Change weather conditions
+
 
 <p align="center">
    <img src="images/controlpanel_xp.png" alt="XPlane control panel" width="250"/>
