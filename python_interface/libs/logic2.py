@@ -1,15 +1,17 @@
-def roll(roll,vibration_levels):
+def roll(roll,vibration_levels,threshold_roll,invert):
     intensite_roll = 0
     str_roll = "NOTHING"
 
-    if roll > 2:
+    if invert is True :
+        roll = -roll
+
+    if roll > threshold_roll:
         str_r = "RIGHT_"
 
         roll_use = abs(roll)
-        if (roll_use > 2) and (roll_use < 24):
-            intensite_roll = ((roll_use-2)*(100/21))/100
+        if (roll_use > threshold_roll) and (roll_use < 24):
+            intensite_roll = ((roll_use-threshold_roll)*(100/21))/100
             str_roll = str_r + "1"
-
 
             for i in [0,4,8,12,23,27,31,35]:
                 vibration_levels[i] = intensite_roll*100
@@ -44,12 +46,12 @@ def roll(roll,vibration_levels):
 
 
 
-    elif roll < 2:
+    elif roll < -threshold_roll:
         str_r = "LEFT_"
 
         roll_use = abs(roll)
-        if (roll_use > 2) and (roll_use < 24):
-            intensite_roll = ((roll_use-2)*(100/21))/100
+        if (roll_use > threshold_roll) and (roll_use < 24):
+            intensite_roll = ((roll_use-threshold_roll)*(100/21))/100
             str_roll = str_r + "1"
 
             for i in [3,7,11,15,20,24,28,32]:
@@ -92,18 +94,21 @@ def roll(roll,vibration_levels):
 
 
 
-def pitch(pitch,vibration_levels):
+def pitch(pitch,vibration_levels,threshold_pitch,invert):
     intensite_pitch = 0
     str_pitch = "NOTHING"
 
+    if invert is True :
+        pitch = -pitch
+
     for i in [21,22,25,26,29,30,33,34]:
                 vibration_levels[i] = 0
-    if pitch > 2:
+    if pitch > threshold_pitch:
         str_p = "UP_"
 
         pitch_use = abs(pitch)
-        if (pitch_use > 2) and (pitch_use < 14):
-            intensite_pitch = ((pitch_use-2)*(100/11))/100
+        if (pitch_use > threshold_pitch) and (pitch_use < 14):
+            intensite_pitch = ((pitch_use-threshold_pitch)*(100/11))/100
             str_pitch = str_p + "1"
 
             for i in [1,2,5,6,9,10,13,14]:
@@ -138,12 +143,12 @@ def pitch(pitch,vibration_levels):
                 vibration_levels[i] = 100
 
 
-    elif pitch < 2:
+    elif pitch < -threshold_pitch:
         str_p = "DOWN_"
 
         pitch_use = abs(pitch)
-        if (pitch_use > 2) and (pitch_use < 14):
-            intensite_pitch = ((pitch_use-2)*(100/11))/100
+        if (pitch_use > threshold_pitch) and (pitch_use < 14):
+            intensite_pitch = ((pitch_use-threshold_pitch)*(100/11))/100
             str_pitch = str_p + "1"
 
             for i in [1,2,5,6,9,10,13,14]:

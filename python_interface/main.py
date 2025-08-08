@@ -67,18 +67,20 @@ def roll_processing(shared_vars, vibration_levels):
     while shared_vars['running']:
         roll = shared_vars['roll']
         user_intensity = shared_vars['user_intensity']
+        threshold_roll = shared_vars['threshold_roll']
+        invert = shared_vars['invert']
 
         if shared_vars['mode'] == 1:
-            intensite_roll, str_roll, vibration_levels = logic1.roll(roll,vibration_levels)
+            intensite_roll, str_roll, vibration_levels = logic1.roll(roll,vibration_levels,threshold_roll,invert)
 
         elif shared_vars['mode'] == 2:
-            intensite_roll, str_roll, vibration_levels = logic2.roll(roll,vibration_levels)
+            intensite_roll, str_roll, vibration_levels = logic2.roll(roll,vibration_levels,threshold_roll,invert)
 
         elif shared_vars['mode'] == 3:
-            intensite_roll, str_roll, vibration_levels = logic3.roll(roll,vibration_levels)
+            intensite_roll, str_roll, vibration_levels = logic3.roll(roll,vibration_levels,threshold_roll,invert)
 
         elif shared_vars['mode'] == 4:
-            intensite_roll, str_roll, vibration_levels = logic4.roll(roll,vibration_levels)
+            intensite_roll, str_roll, vibration_levels = logic4.roll(roll,vibration_levels,threshold_roll,invert)
 
         shared_vars['intensite_roll'] = intensite_roll*user_intensity
         shared_vars['str_roll'] = str_roll
@@ -90,18 +92,20 @@ def pitch_processing(shared_vars, vibration_levels):
     while shared_vars['running']:
         pitch = shared_vars['pitch']
         user_intensity = shared_vars['user_intensity']
+        threshold_pitch = shared_vars['threshold_pitch']
+        invert = shared_vars['invert']
 
         if shared_vars['mode'] == 1:
-            intensite_pitch, str_pitch, vibration_levels = logic1.pitch(pitch,vibration_levels)
+            intensite_pitch, str_pitch, vibration_levels = logic1.pitch(pitch,vibration_levels,threshold_pitch,invert)
 
         elif shared_vars['mode'] == 2:
-            intensite_pitch, str_pitch, vibration_levels = logic2.pitch(pitch,vibration_levels)
+            intensite_pitch, str_pitch, vibration_levels = logic2.pitch(pitch,vibration_levels,threshold_pitch,invert)
 
         elif shared_vars['mode'] == 3:
-            intensite_pitch, str_pitch, vibration_levels = logic3.pitch(pitch,vibration_levels)
+            intensite_pitch, str_pitch, vibration_levels = logic3.pitch(pitch,vibration_levels,threshold_pitch,invert)
 
         elif shared_vars['mode'] == 4:
-            intensite_pitch, str_pitch, vibration_levels = logic4.pitch(pitch,vibration_levels)
+            intensite_pitch, str_pitch, vibration_levels = logic4.pitch(pitch,vibration_levels,threshold_pitch,invert)
 
         shared_vars['intensite_pitch'] = intensite_pitch*user_intensity
         shared_vars['str_pitch'] = str_pitch
@@ -181,11 +185,14 @@ if __name__ == '__main__':
     'GEAR': True,
     'intensite_roll': 0.0,
     'intensite_pitch': 0.0,
+    'threshold_roll' : 2.0,
+    'threshold_pitch' : 2.0,
     'str_roll': '',
     'str_pitch': '',
     'user_intensity': 1.0,
     'mode': 1,
-    'running': True
+    'running': True,
+    'invert': False
     }
 
     vibration_levels = [0]*40  # Liste normale, partagée entre threads
@@ -213,7 +220,7 @@ if __name__ == '__main__':
         shared_vars['running'] = False
 
     quit_button = Button(
-        screen, 775, 625, 150, 40,
+        screen, 675, 650, 150, 40,
         text='STOP',
         fontSize=30,
         margin=20,
@@ -223,6 +230,23 @@ if __name__ == '__main__':
         textColour=(255,255,255),
         radius=20,
         onClick=stop_program)
+
+    def toggle_invert():
+        shared_vars['invert'] = not shared_vars['invert']
+        invert_button.setText("INVERT: ON" if shared_vars['invert'] else "INVERT: OFF")
+
+    invert_button = Button(
+        screen, 850, 650, 200, 40,
+        text='INVERT: OFF',
+        fontSize=30,
+        margin=20,
+        inactiveColour=(160, 30, 30),
+        hoverColour=(150, 0, 0),
+        pressedColour=(200, 0, 0),
+        textColour=(255,255,255),
+        radius=20,
+        onClick=toggle_invert
+    )
 
     icon = pygame.image.load("./python_interface/assets/IISRI_icon.png")
     pygame.display.set_icon(icon)
@@ -253,10 +277,12 @@ if __name__ == '__main__':
         pygame.draw.circle(circle_surf, (255, 255, 0, alpha), (16, 16), 16)
         surface.blit(circle_surf, (x - 16, y - 16))  # centered around the point (x, y)
 
-    slider = Slider(screen, 660, 550, 200, 20, min=1, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
+    slider = Slider(screen, 660, 530, 200, 20, min=1, max=100, step=1, initial=85, colour=(255,255,255), handleColour=(255,255,0))
+    slider2 = Slider(screen, 690, 570, 100, 15, min=0, max=10, step=1, initial=2, colour=(255,255,255), handleColour=(255,255,0))
+    slider3 = Slider(screen, 690, 610, 100, 15, min=0, max=10, step=1, initial=2, colour=(255,255,255), handleColour=(255,255,0))
 
-    # --- Logic mode selection (1, 2, or 3)
-    selected_logic = {'value': 1}  # Valeur partagée dans l'interface
+    # --- Logic mode selection (1, 2, 3, or 4)
+    selected_logic = {'value': 1}
 
     def set_logic_mode(mode):
         selected_logic['value'] = mode
@@ -354,10 +380,6 @@ if __name__ == '__main__':
         txt = font_info.render(f"Yaw :   {yaw:.1f} °", True, (230, 230, 230))
         screen.blit(txt, (75, 620))
 
-        txt = font_info.render(f"Intensity : {slider.getValue():.0f} %", True, (255, 220, 0))
-        screen.blit(txt, (915, 547))
-        shared_vars['user_intensity'] = slider.getValue() / 100
-
         txt = font_info.render(f"Gspeed : {speed : .1f} m/s", True, (230, 230, 230))
         screen.blit(txt, (245, 540))
         txt = font_info.render(f"TAS : {TAS : .1f} m/s", True, (230, 230, 230))
@@ -368,6 +390,18 @@ if __name__ == '__main__':
         txt = font_info.render(f"Logic Mode: {selected_logic['value']}", True, 	(255, 220, 0))
         screen.blit(txt, (785, 430))
         shared_vars['mode'] = selected_logic['value']
+
+        txt = font_info.render(f"Intensity : {slider.getValue():.0f} %", True, (255, 220, 0))
+        screen.blit(txt, (900, 527))
+        shared_vars['user_intensity'] = slider.getValue() / 100
+
+        txt = font_info.render(f"Roll threshold :   {slider2.getValue():.0f}°", True, (255, 220, 0))
+        screen.blit(txt, (830, 565))
+        shared_vars['threshold_roll'] = slider.getValue()
+
+        txt = font_info.render(f"Pitch threshold : {slider3.getValue():.0f}°", True, (255, 220, 0))
+        screen.blit(txt, (830, 605))
+        shared_vars['threshold_pitch'] = slider.getValue()
 
         # Display pictures of the vest
         screen.blit(VFront, (585, 90))
