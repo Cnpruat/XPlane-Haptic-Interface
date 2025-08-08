@@ -397,11 +397,11 @@ if __name__ == '__main__':
 
         txt = font_info.render(f"Roll threshold :   {slider2.getValue():.0f}°", True, (255, 220, 0))
         screen.blit(txt, (830, 565))
-        shared_vars['threshold_roll'] = slider.getValue()
+        shared_vars['threshold_roll'] = slider2.getValue()
 
         txt = font_info.render(f"Pitch threshold : {slider3.getValue():.0f}°", True, (255, 220, 0))
         screen.blit(txt, (830, 605))
-        shared_vars['threshold_pitch'] = slider.getValue()
+        shared_vars['threshold_pitch'] = slider3.getValue()
 
         # Display pictures of the vest
         screen.blit(VFront, (585, 90))
