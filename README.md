@@ -1,17 +1,15 @@
-# XPlane-Haptic-Interface
+# ✈️ XPlane-Haptic-Interface
 
-This repository gathers two projects developed during my engineering internship. Both interact with the X-Plane flight simulator:
+Spatial disorientation is a common issue in aviation, often leading to poor decisions and accidents. To address this, this project focus on enhancing situational awareness through intuitive haptic feedback.
+This repository gathers two projects developed during my engineering internship. Both interact with the X-Plane flight simulator :
 
-- 🧠 A **Python program** that retrieves real-time flight data from X-Plane and triggers haptic feedback using the **bHaptics TactSuit X40**.
-- ✈️ A **C++ plugin** for X-Plane that displays an interactive window with buttons to trigger failures, adjust weather, or test control surfaces.
-
- Helps pilots fight spatial disorientation in simulator training faut mettre l'accent sur ça là
-
+- A **Python program** that retrieves real-time flight data from X-Plane and triggers haptic feedback using the **bHaptics TactSuit X40**.
+- A **C++ plugin** for X-Plane that displays an interactive window with buttons to trigger failures, adjust weather, or test control surfaces.
 ---
 
 # 🏁 How to use
 
-## Software
+## Softwares
 - Windows 10/11
 - Python 3.13.5 (tested)
 - Visual studio code (recommended)
@@ -83,13 +81,10 @@ You will also need the following dependencies :
    <img src="images/GUI_py.png" alt="Python GUI" width="850"/>
 </p>
 
-*GUI while the plane is pitching and rolling*
-
-
-You can use the buttons to switch between the different operating logics. A slider allows you tu adjust the intensity of the vibrations.
+You can use the buttons to switch between the different operating logics. Three sliders allows you tu adjust the intensity of the vibrations as well as the roll and pitch activation threshold.
 
 ### Operating logics
-The differents vibrating logics are implemented and can be modified through the `logic1.py`, `logic2.py`, `logic3.py`, `logic4.py` files.
+The differents vibrating logics are implemented and can be modified through the `logic1.py`, `logic2.py`, `logic3.py` and `logic4.py` files.
 
 
 ## X-Plane Plugin
@@ -131,24 +126,24 @@ If you close the control panel, you can still re-open on the upper menu :
 ```
 XPlane-Haptic-Interface/
 │
-├── python_interface/            ← Python haptic integration + GUI
+├── python_interface/
     ├── assets/
     ├── combine/
     ├── libs/
     ├── patterns/
     └── main.py
-├── control_panel_xp/            ← C++ plugin for XPlane
+├── control_panel_xp/
     ├── SDK/
     ├── XPlaneConnect/
     ├── plugin_output/
     └── control_panel.cpp
-├── images/                      ← Illustrations for README
+├── images/
 ├── .gitignore
 └── README.md
 ```
 
 ---
-# 👨‍🔬 Author
+# 👨‍🏭 Author
 
 
 **Pierre Bourrandy**, 4th year Mechatronics Engineering student - **ENSIL-ENSCI**
@@ -158,4 +153,6 @@ Thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust thr
 
 ## Contact detail
 pierre.bourrandy@etu.unilim.fr *(ENSIL-ENSCI)*
+
+Github : https://github.com/Cnpruat/XPlane-Haptic-Interface
 
