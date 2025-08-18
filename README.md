@@ -154,5 +154,5 @@ Thanks to **Mr. Houshyar Asadi** for the inspiring topic, support, and trust thr
 ## Contact detail
 pierre.bourrandy@etu.unilim.fr *(ENSIL-ENSCI)*
 
-Github : https://github.com/Cnpruat/XPlane-Haptic-Interface
+https://github.com/Cnpruat/XPlane-Haptic-Interface *(GitHub)*
 
