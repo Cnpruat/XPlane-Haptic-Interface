@@ -27,7 +27,6 @@ pygame==2.6.1
 pygame_widgets==1.2.2
 setuptools==80.8.0
 websocket_client==0.57.0
-ff
 tactcombine==0.1
 ```
 ### Standard librairies
